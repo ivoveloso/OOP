@@ -1,7 +1,7 @@
 {
-  "name": "OOP",
+  "name": "oop",
   "version": "1.0.0",
-  "description": "",
+  "description": "[![License: MPL 2.0](https://img.shields.io/badge/License-MPL_2.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)",
   "main": "index.js",
   "scripts": {
     "start": "node index",
@@ -12,9 +12,22 @@
   "license": "ISC",
   "dependencies": {
     "chalk": "^2.4.1",
-    "inquirer": "8.2.4"
+    "inquirer": "^8.2.4"
   },
   "devDependencies": {
     "jest": "^24.8.0"
-  }
+  },
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivoveloso/OOP.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/ivoveloso/OOP/issues"
+  },
+  "homepage": "https://github.com/ivoveloso/OOP#readme"
 }
