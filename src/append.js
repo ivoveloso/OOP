@@ -1,8 +1,55 @@
 const fs = require('fs');
 
+const managerStr = (data) => `            
+        <div class="col-sm-3">
+        <div class="card text-center">
+          <div class="card-body align-items-center row">
+              <div style="background-color: #2d48df; padding: 10px">
+                  <h4 class="card-title" style="color:white">${data.getName()}</h4>
+                  <h4 class="card-title fa fa-coffee" style="color:white"> Manager</h4>
+              </div>
+            <a class="card-footer text-muted">ID: ${data.getId()}</a>
+            <a href="mailto:${data.getEmail()}" class="card-footer text-muted">Email: ${data.getEmail()}</a>
+            <a class="card-footer text-muted">Office Number: ${data.officeNumber}</a>
+          </div>
+        </div>
+        </div> `
+
+const engineerStr = (data) => `            
+        <div class="col-sm-3">
+            <div class="card text-center">
+              <div class="card-body align-items-center row">
+                  <div style="background-color: #2d48df; padding: 10px">
+                      <h4 class="card-title" style="color:white">${data.getName()}</h4>
+                      <h4 class="card-title fas fa-glasses" style="color:white"> Engineer</h4>
+                  </div>
+                <a class="card-footer text-muted">ID: ${data.getId()}</a>
+                <a href="mailto:${data.getEmail()}" class="card-footer text-muted">Email: ${data.getEmail()}</a>
+                <a href="https://github.com/${data.getGithub()}" target='_blank' class="card-footer text-muted">GitHub: ${data.getGithub()}</a>
+              </div>
+            </div>
+        </div>`
+
+const internStr = (data) => `            
+          <div class="col-sm-3">
+              <div class="card text-center">
+                <div class="card-body align-items-center row">
+                    <div style="background-color: #2d48df; padding: 10px">
+                        <h4 class="card-title" style="color:white">${data.getName()}</h4>
+                        <h4 class="card-title fa fa-graduation-cap" style="color:white"> Intern</h4>
+                    </div>
+                  <a class="card-footer text-muted">ID: ${data.getId()}</a>
+                  <a href="mailto:${data.getEmail()}" class="card-footer text-muted">Email: ${data.getEmail()}</a>
+                  <a class="card-footer text-muted">School: ${data.getSchool()}</a>
+                </div>
+              </div>
+          </div>`
+
+
+
 
 // TODO: Create a function to append data to html file
-function generateHTML(data) {    
+function generateHTML(data) {
 fs.writeFile(`./dist/index.html`,`${basicLayout(data)}\n`,
  (err) => err ? console.error(err) : console.log('HTML ready!'))
 }
@@ -38,20 +85,10 @@ function basicLayout (data) {
     
       <main>
         <div class="row" id="main">
-            <div class="col-sm-3">
-              <div class="card text-center">
-                <div class="card-body align-items-center row">
-                    <div style="background-color: #2d48df; padding: 10px">
-                        <h4 class="card-title" style="color:white">${data.name}</h4>
-                        <h4 class="card-title fa fa-coffee" style="color:white"> Manager</h4>
-                    </div>
-                  <a class="card-footer text-muted">ID: ${data.eID}</a>
-                  <a href="mailto:${data.email}" class="card-footer text-muted">Email: ${data.email}</a>
-                  <a class="card-footer text-muted">Office Number: ${data.officeNum}</a>
-                </div>
-              </div>
-            </div> 
-          </div>
+
+        ${basicLoop(data)}
+
+        </div>
       </main>
     
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -60,5 +97,23 @@ function basicLayout (data) {
     
     </html>`
 }
+
+function basicLoop (data) {
+
+let str = '';
+console.log(data)
+for (let index = 0; index < data.length; index++) {
+  const element = data[index];
+  if (element.getRole() == 'Manager') {
+    str += managerStr(element)
+  } else if (element.getRole() == 'Engineer') {
+    str += engineerStr(element)
+  } else if (element.getRole() == 'Intern') {
+    str += internStr(element)
+  }
+}
+return str;
+}
+
 
 module.exports = generateHTML;

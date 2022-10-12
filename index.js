@@ -4,6 +4,7 @@ const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const generateHTML = require('./src/append');
+const array = [];
 
 // TODO: Create an array of questions for user input
 const questions = [
@@ -60,62 +61,10 @@ function init() {
       },
     ])
     .then(val => {
-      generateHTML(val);
-      finalQ(val);
+      const manager = new Manager(val.name, val.eID, val.email, val.officeNum);
+      array.push(manager);
+      finalQ();
       })}
-
-function finalQ(data) {
-    const manager = new Manager(data.name, data.eID, data.email, data.officeNum);
-    inquirer
-    .prompt([
-      {
-        type: 'list',
-        message: questions[4],
-        choices: roles,
-        name: 'role',
-      }
-    ])
-    .then(val => {
-      if (val.role === `Engineer`){
-        engineer();
-      } else if(val.role === 'Intern') {
-        intern();
-      } else {
-        console.info('Your team is ready. HTML generated!');
-        console.info(manager.getRole());
-      }
-})
-    }
-
-function engineer() {
-  inquirer
-    .prompt([
-      {
-        type: 'input',
-        message: engQs[0],
-        name: 'name',
-      },
-      {
-        type: 'input',
-        message: engQs[1],
-        name: 'eID',
-      },
-      {
-        type: 'input',
-        message: engQs[2],
-        name: 'email',
-      },
-      {
-        type: 'input',
-        message: engQs[3],
-        name: 'github',
-      },
-    ])
-    .then(val => {
-      const engineer = new Engineer(val.name, val.eID, val.email, val.github);
-      finalQ(val);
-      })
-  }
 
 function intern() {
   inquirer
@@ -142,10 +91,64 @@ function intern() {
       },
     ])
     .then(val => {
-      const intern = new Intern(val.name, val.eID, val.email, val.school);
-      finalQ(val);
+      const internObj = new Intern(val.name, val.eID, val.email, val.school);
+      array.push(internObj);
+      finalQ();
     })
 }
+
+function engineer() {
+  inquirer
+    .prompt([
+      {
+        type: 'input',
+        message: engQs[0],
+        name: 'name',
+      },
+      {
+        type: 'input',
+        message: engQs[1],
+        name: 'eID',
+      },
+      {
+        type: 'input',
+        message: engQs[2],
+        name: 'email',
+      },
+      {
+        type: 'input',
+        message: engQs[3],
+        name: 'github',
+      },
+    ])
+    .then(val => {
+      const engineerObj = new Engineer(val.name, val.eID, val.email, val.github);
+      array.push(engineerObj);
+      finalQ();
+      })
+  }
+
+function finalQ() {
+    inquirer
+    .prompt([
+      {
+        type: 'list',
+        message: questions[4],
+        choices: roles,
+        name: 'role',
+      }
+    ])
+    .then(val => {
+      if (val.role == `Engineer`){
+        engineer();
+      } else if(val.role == 'Intern') {
+        intern();
+      } else {
+        generateHTML(array);
+        console.info('Your team is ready. HTML generated!');
+      }
+})
+    }
 
 // Function call to initialize app
 init();
