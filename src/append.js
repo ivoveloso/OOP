@@ -40,7 +40,7 @@ const internStr = (data) => `
                     </div>
                   <a class="card-footer text-muted">ID: ${data.getId()}</a>
                   <a href="mailto:${data.getEmail()}" class="card-footer text-muted">Email: ${data.getEmail()}</a>
-                  <a class="card-footer text-muted">School: ${data.getSchool()}</a>
+                  <a href='https://google.com/search?q=${data.getSchool()}&btnI=1' target='_blank' class="card-footer text-muted">School: ${data.getSchool()}</a>
                 </div>
               </div>
           </div>`
@@ -101,7 +101,6 @@ function basicLayout (data) {
 function basicLoop (data) {
 
 let str = '';
-console.log(data)
 for (let index = 0; index < data.length; index++) {
   const element = data[index];
   if (element.getRole() == 'Manager') {

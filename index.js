@@ -4,7 +4,7 @@ const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const generateHTML = require('./src/append');
-const array = [];
+const objArray = [];
 
 // TODO: Create an array of questions for user input
 const questions = [
@@ -62,7 +62,7 @@ function init() {
     ])
     .then(val => {
       const manager = new Manager(val.name, val.eID, val.email, val.officeNum);
-      array.push(manager);
+      objArray.push(manager);
       finalQ();
       })}
 
@@ -92,7 +92,7 @@ function intern() {
     ])
     .then(val => {
       const internObj = new Intern(val.name, val.eID, val.email, val.school);
-      array.push(internObj);
+      objArray.push(internObj);
       finalQ();
     })
 }
@@ -123,7 +123,7 @@ function engineer() {
     ])
     .then(val => {
       const engineerObj = new Engineer(val.name, val.eID, val.email, val.github);
-      array.push(engineerObj);
+      objArray.push(engineerObj);
       finalQ();
       })
   }
@@ -144,7 +144,7 @@ function finalQ() {
       } else if(val.role == 'Intern') {
         intern();
       } else {
-        generateHTML(array);
+        generateHTML(objArray);
         console.info('Your team is ready. HTML generated!');
       }
 })
